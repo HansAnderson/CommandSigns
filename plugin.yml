@@ -1,0 +1,54 @@
+name: CommandSigns
+main: com.hans.CommandSigns.CommandSigns
+author: HansAnderson
+version: 1.1.0
+description: >
+             Add commands to signs.
+commands:
+  commandsigns:
+    aliases:
+    description: CommandSigns commands.
+    usage: |
+        /commandsigns line<number> - Add a line to your CommandSign clipboard. Right click a sign to activate.
+        /commandsigns read - Right click a sign to read the CommandSign text.
+        /commandsigns remove - Right click a sign to remove a CommandSign.
+        /commandsigns clear - Clear your CommandSign clipboard.
+permissions:
+    CommandSigns.*:
+        description: Gives access to all CommandSigns commands
+        children:
+            CommandSigns.create.regular: true
+            CommandSigns.create.super: true
+            CommandSigns.remove: true
+            CommandSigns.use.regular: true
+            CommandSigns.use.super: true
+            CommandSigns.remove: true
+            CommandSigns.grouyp.*: true
+    CommandSigns.create.*:
+        description: Gives access CommandSigns sign creation commands
+        children:
+            CommandSigns.create.regular: true
+            CommandSigns.create.super: true
+    CommandSigns.use.*:
+        description: Gives access to CommandSigns sign use
+        children:
+            CommandSigns.use.regular: true
+            CommandSigns.use.super: true
+    CommandSigns.create.regular:
+        description: Allows you to create a regular CommandSign
+        default: false
+    CommandSigns.create.super:
+        description: Allows you to create a super CommandSign
+        default: false
+    CommandSigns.remove:
+        description: Allows you to remove a CommandSign
+        default: false
+    CommandSigns.use.regular:
+        description: Allows you to use a regular CommandSign
+        default: false
+    CommandSigns.use.super:
+        description: Allows you to use a super CommandSign
+        default: false
+    CommandSigns.group.*:
+        description: Allows you to use all group commands
+        default: false
