@@ -42,7 +42,6 @@ public class CommandSignsSignClickEvent {
 			
 			for(String command : commandList)
 			{
-				System.out.println("CS DEBUG [COMMAND IS]: "+command);
 				if(command.indexOf("@") != 0 && groupFilter != null && !inGroup(player, groupFilter)) {
 					continue;
 				}
@@ -76,7 +75,6 @@ public class CommandSignsSignClickEvent {
 					}else{
 						command = command.substring(1);
 					}
-					System.out.println("CS DEBUG: "+command);
 					Bukkit.dispatchCommand(player, command);
 					//player.performCommand(command);
 					if(newPermission != null) {
@@ -105,7 +103,6 @@ public class CommandSignsSignClickEvent {
 
 	public static List<String> parseSignText(Player player, String text)
 	{
-		System.out.println("CS DEBUG TEXT: "+ text);
 		text = text.replace("<X>", ""+ player.getLocation().getBlockX());
 		text = text.replace("<Y>", ""+ player.getLocation().getBlockY());
 		text = text.replace("<Z>", ""+ player.getLocation().getBlockZ());
