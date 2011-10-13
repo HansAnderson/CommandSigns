@@ -1,7 +1,7 @@
 name: CommandSigns
 main: com.hans.CommandSigns.CommandSigns
 author: HansAnderson
-version: 1.1.0
+version: 1.2.0
 description: >
              Add commands to signs.
 commands:
