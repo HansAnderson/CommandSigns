@@ -11,6 +11,7 @@ commands:
     usage: |
         /commandsigns line<number> - Add a line to your CommandSign clipboard. Right click a sign to activate.
         /commandsigns read - Right click a sign to read the CommandSign text.
+        /commandsigns copy - Copy a CommandSigns to your clipboard.
         /commandsigns remove - Right click a sign to remove a CommandSign.
         /commandsigns clear - Clear your CommandSign clipboard.
 permissions:
@@ -23,7 +24,7 @@ permissions:
             CommandSigns.use.regular: true
             CommandSigns.use.super: true
             CommandSigns.remove: true
-            CommandSigns.grouyp.*: true
+            CommandSigns.group.*: true
     CommandSigns.create.*:
         description: Gives access CommandSigns sign creation commands
         children:

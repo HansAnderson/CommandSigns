@@ -3,7 +3,8 @@ package com.hans.CommandSigns;
 public enum CommandSignsPlayerState {
 	ENABLE(0),
 	DISABLE(1),
-	READ(2);
+	READ(2),
+	COPY(3);
 	
 	private final int id;
 	

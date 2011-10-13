@@ -55,6 +55,11 @@ class CommandSignsCommand implements CommandExecutor {
 					plugin.playerStates.put(playerName, CommandSignsPlayerState.READ);
 					player.sendMessage("Click a sign to read CommandSign text.");
 				}
+			} else if(args[0].equalsIgnoreCase("copy")) {
+				if(plugin.hasPermission(player, "CommandSigns.create.regular") || plugin.hasPermission(player, "CommandSigns.create.super")) {
+					plugin.playerStates.put(playerName, CommandSignsPlayerState.COPY);
+					player.sendMessage("Click a sign to copy CommandSign text.");
+				}
 			} else if(args[0].equalsIgnoreCase("remove")) {
 				if(plugin.hasPermission(player, "CommandSigns.remove")) {
 					plugin.playerStates.put(playerName, CommandSignsPlayerState.DISABLE);
