@@ -21,7 +21,7 @@ public class CommandSignsText {
 		for(int i = 0; i < 10; i++) {
 			line = this.getLine(i);
 			if(line != null) {
-				string = string.concat(this.getLine(i) + ((i != 9) ? " " : ""));
+				string = string.concat(this.getLine(i) + ((i != 9) ? "\r" : ""));
 			}
 		}
 		return string;

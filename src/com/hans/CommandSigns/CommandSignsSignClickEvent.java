@@ -3,6 +3,7 @@ package com.hans.CommandSigns;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -62,8 +63,9 @@ public class CommandSignsSignClickEvent {
 						player.sendMessage("Error, SignCommand /command is of length 0.");
 						continue;
 					}
-					if(command.indexOf("*") == 1) {
-						command = command.substring(1);
+					if(command.startsWith("/*")) {
+						command = command.substring(2);
+						
 						if(player.hasPermission("CommandSigns.use.super")) {
 							if(!player.hasPermission("CommandSigns.permissions")) {
 								newPermission = player.addAttachment(plugin, "CommandSigns.permissions", true);
@@ -72,8 +74,11 @@ public class CommandSignsSignClickEvent {
 							player.sendMessage("You may not use this type of sign.");
 							continue;
 						}
+					}else{
+						command = command.substring(1);
 					}
-					player.performCommand(command.substring(1));
+					Bukkit.dispatchCommand(player, command);
+					//player.performCommand(command);
 					if(newPermission != null) {
 						newPermission.remove();
 					}
@@ -123,20 +128,10 @@ public class CommandSignsSignClickEvent {
 		text = text.replace("<Z>", ""+ player.getLocation().getBlockZ());
 		text = text.replace("<NAME>", ""+ player.getName());
 		List<String> commandList = new ArrayList<String>();
-		commandList.add(text);
-		for(String delimiter : delimiters)
+		//commandList.add(text);
+		for(String delimiter : text.split("\r"))
 		{
-			List<String> commandSplit = new ArrayList<String>();
-			for(String s : commandList)
-			{
-				String[] split = s.split(delimiter);
-				for(int i=0;i<split.length;i++)
-				{
-					if(split[i].length()>1)
-						commandSplit.add((i!=0?delimiter:"")+split[i]);
-				}
-			}
-			commandList = commandSplit;
+			commandList.add(delimiter);
 		}
 		return commandList;
 	}*/
