@@ -9,14 +9,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.permissions.PermissionAttachment;
 
 public class CommandSignsSignClickEvent {
-	
+
 	private static CommandSigns plugin;
 	//private static String[] delimiters = {"/","\\\\","@"};
-	
+
 	public CommandSignsSignClickEvent(CommandSigns instance){
 		plugin = instance;
 	}
-	
+
 	public void onRightClick(PlayerInteractEvent event, Sign sign)
 	{
 		Player player = event.getPlayer();
@@ -40,13 +40,13 @@ public class CommandSignsSignClickEvent {
 		List<String> commandList = parseCommandSign(player, plugin.activeSigns.get(location));
 		if(plugin.hasPermission(player,"CommandSigns.use.regular")) {				
 			String groupFilter = null;
-			
+
 			for(String command : commandList)
 			{
 				if(command.indexOf("@") != 0 && groupFilter != null && !inGroup(player, groupFilter)) {
 					continue;
 				}
-				
+
 				if(command.startsWith("@")) {
 					if(command.length() <= 1) {
 						groupFilter = null;
@@ -55,31 +55,34 @@ public class CommandSignsSignClickEvent {
 					}
 					continue;
 				}
-				
+
 				if(command.startsWith("/")) {
 					PermissionAttachment newPermission = null;
-					if(command.length() <= 1) {
-						player.sendMessage("Error, SignCommand /command is of length 0.");
-						continue;
-					}
-					if(command.indexOf("*") == 1) {
-						command = command.substring(1);
-						if(player.hasPermission("CommandSigns.use.super")) {
-							if(!player.hasPermission("CommandSigns.permissions")) {
-								newPermission = player.addAttachment(plugin, "CommandSigns.permissions", true);
-							}
-						} else {
-							player.sendMessage("You may not use this type of sign.");
+					try {
+						if(command.length() <= 1) {
+							player.sendMessage("Error, SignCommand /command is of length 0.");
 							continue;
 						}
-					}
-					player.performCommand(command.substring(1));
-					if(newPermission != null) {
-						newPermission.remove();
+						if(command.indexOf("*") == 1) {
+							command = command.substring(1);
+							if(player.hasPermission("CommandSigns.use.super")) {
+								if(!player.hasPermission("CommandSigns.permissions")) {
+									newPermission = player.addAttachment(plugin, "CommandSigns.permissions", true);
+								}
+							} else {
+								player.sendMessage("You may not use this type of sign.");
+								continue;
+							}
+						}
+						player.performCommand(command.substring(1));
+					} finally {
+						if(newPermission != null) {
+							newPermission.remove();
+						}
 					}
 					continue;
 				}
-				
+
 				if(command.startsWith("\\")) {
 					String msg = command.substring(1);
 					player.sendMessage(msg);
@@ -88,7 +91,7 @@ public class CommandSignsSignClickEvent {
 			}
 		}
 	}
-	
+
 	private boolean inGroup(Player player, String group) {
 		String permissionsNode = ("CommandSigns.group." + group);
 		if(player.hasPermission(permissionsNode)) {
@@ -98,7 +101,7 @@ public class CommandSignsSignClickEvent {
 		return false;
 	}
 
-	
+
 	public static List<String> parseCommandSign(Player player, CommandSignsText commandSign) {
 		List<String> commandList = new ArrayList<String>();
 		String line;
@@ -114,7 +117,7 @@ public class CommandSignsSignClickEvent {
 		}
 		return commandList;
 	}
-	
+
 	//To parse a sign... kept in case regular sign support is added again
 	/*public static List<String> parseSignText(Player player, String text)
 	{
@@ -140,7 +143,7 @@ public class CommandSignsSignClickEvent {
 		}
 		return commandList;
 	}*/
-	
+
 	public void enableSign(Player player, CommandSignsLocation location) {
 		if(plugin.activeSigns.containsKey(location)) {
 			player.sendMessage("Sign is already enabled!");
@@ -152,7 +155,7 @@ public class CommandSignsSignClickEvent {
 		plugin.playerText.remove(player.getName());
 		player.sendMessage("CommandSign enabled");
 	}
-	
+
 	public void readSign(Player player, CommandSignsLocation location) {
 		CommandSignsText text = plugin.activeSigns.get(location);
 		if(text == null) {
@@ -166,7 +169,7 @@ public class CommandSignsSignClickEvent {
 		}
 		plugin.playerStates.remove(player.getName());
 	}
-	
+
 	public void copySign(Player player, CommandSignsLocation location) {
 		String playerName = player.getName();
 		CommandSignsText text = plugin.activeSigns.get(location);
@@ -183,7 +186,7 @@ public class CommandSignsSignClickEvent {
 		player.sendMessage("Added to CommandSigns clipboard. Click a sign to enable.");
 		plugin.playerStates.put(playerName, CommandSignsPlayerState.ENABLE);
 	}
-	
+
 	public void disableSign(Player player, CommandSignsLocation location) {
 		String playerName = player.getName();
 		if(!plugin.activeSigns.containsKey(location)) {
